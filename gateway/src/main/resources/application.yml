@@ -3,6 +3,7 @@ server:
 spring:
   application:
     name: gateway-server
+
 zuul:
   prefix: /api
   routes:
@@ -12,6 +13,10 @@ zuul:
     address:
       path: /address/**
       serviceId: address-service
+    web:
+      path: /web/**
+      serviceId: web-mvc
+
 eureka:
   client:
     serviceUrl:

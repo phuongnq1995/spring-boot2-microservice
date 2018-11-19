@@ -5,6 +5,10 @@ eureka:
     serviceUrl:
       defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka
 
+address-service:
+  ribbon:
+    listOfServers: localhost:2221, localhost:2222
+
 spring:  
   application:
     name: employee-service

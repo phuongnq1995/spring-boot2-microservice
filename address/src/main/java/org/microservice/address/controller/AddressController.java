@@ -5,13 +5,18 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.microservice.address.model.Address;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AddressController {
-	
+
+	@Autowired
+	private Environment environment;
+
 	private List<Address> address;
 
 	protected Logger logger = Logger.getLogger(AddressController.class.getName());
@@ -29,6 +34,8 @@ public class AddressController {
 	@GetMapping("address/{number}")
 	public Address findByNumber(@PathVariable("number") int number) {
 		logger.info(String.format("Account.findByNumber(%s)", number));
-		return address.stream().filter(it -> it.getNumber() == (number)).findFirst().get();
+		Address address = this.address.stream().filter(it -> it.getNumber() == (number)).findFirst().get();
+		address.setPort(Integer.parseInt(environment.getProperty("local.server.port")));
+		return address;
 	}
 }

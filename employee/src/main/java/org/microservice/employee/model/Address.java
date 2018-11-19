@@ -4,6 +4,7 @@ public class Address {
 	
 	private int number;
 	private String name;
+	private int port;
 
 	public int getNumber() {
 		return number;
@@ -21,9 +22,20 @@ public class Address {
 		this.name = name;
 	}
 
-	public Address(int number, String name) {
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public Address(int number, String name, int port) {
 		super();
 		this.number = number;
 		this.name = name;
+		this.port = port;
 	}
+
+	public Address() {}
 }
