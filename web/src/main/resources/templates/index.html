@@ -4,11 +4,12 @@
 <title>Spring Boot Thymeleaf Hello World Example</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-<link rel="stylesheet" type="text/css"
-	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
-
-<link rel="stylesheet" th:href="@{/css/main.css}"
-	href="../../css/main.css" />
+<!-- Include Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
 </head>
 <body>
@@ -38,9 +39,55 @@
 
 	</div>
 	<!-- /.container -->
-
-	<script type="text/javascript"
-		src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+	<div id="contents">
+		<ul>
+			<li style="list-style-type:none" v-for="employee in employees">
+				<employee-card v-bind:employee="employee" v-bind:key="employee.id"></employee-card>
+			</li>
+		</ul>
+	</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+var getEmployeesUrl = "localhost:3333/employees";
+</script>
+<script type="text/x-template" id="template">
+	<div class="employee">
+		<div class="employee-body">
+			<h6 class="employee-title">
+				{{ employee.name }}
+			</h6>
+			<p class="employee-text">
+				<div>
+				{{ employee.address.name }}
+				</div>
+			</p>
+		</div>
+	</div>
+</script>
+<script type="text/babel">
+	Vue.component('employee-card', {
+		props: ['employee'],
+		template: '#template'
+	});
+	var app = new Vue({
+		el: '#contents',
+		data: {
+			employees: [
+			]
+		},
+		created() {
+			$.ajax({
+				type: "GET",
+				url: getEmployeesUrl,
+				success: function(response) {
+					this.employees = response.data
+				}
+			})
+		}
+	});
+</script>
 </body>
 </html>

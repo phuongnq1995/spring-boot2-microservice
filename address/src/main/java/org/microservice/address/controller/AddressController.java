@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import org.microservice.address.model.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,7 @@ public class AddressController {
 		address.add(new Address(6, "66666"));
 	}
 
+	@CrossOrigin
 	@GetMapping("address/{number}")
 	public Address findByNumber(@PathVariable("number") int number) {
 		logger.info(String.format("Account.findByNumber(%s)", number));

@@ -3,15 +3,12 @@ package org.microservice.employee.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
 import org.microservice.employee.feign.AddressClient;
-import org.microservice.employee.model.Address;
 import org.microservice.employee.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class EmployeeController {
@@ -31,6 +28,7 @@ public class EmployeeController {
 		employees.add(new Employee(4, "employee 4", 28));
 	}
 
+	@CrossOrigin
 	@GetMapping("/employees")
 	public List<Employee> findAll() {
 		for(Employee e : employees) {
