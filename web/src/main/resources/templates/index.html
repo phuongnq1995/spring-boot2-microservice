@@ -51,7 +51,7 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-var getEmployeesUrl = "localhost:3333/employees";
+var getEmployeesUrl = "http://192.168.100.96:3333/employees";
 </script>
 <script type="text/x-template" id="template">
 	<div class="employee">
@@ -61,7 +61,8 @@ var getEmployeesUrl = "localhost:3333/employees";
 			</h6>
 			<p class="employee-text">
 				<div>
-				{{ employee.address.name }}
+				Address name: {{ employee.address.name }}
+				Address port: {{ employee.address.port }}
 				</div>
 			</p>
 		</div>
@@ -75,17 +76,22 @@ var getEmployeesUrl = "localhost:3333/employees";
 	var app = new Vue({
 		el: '#contents',
 		data: {
-			employees: [
-			]
+			employees: []
 		},
 		created() {
-			$.ajax({
-				type: "GET",
-				url: getEmployeesUrl,
-				success: function(response) {
-					this.employees = response.data
-				}
+			var that = this;
+			axios.get(getEmployeesUrl, {
 			})
+			.then(function (response) {
+				var result = response.data;
+				for(var i in result){
+					that.employees.push(result[i]);
+				}
+				console.log(response.data);
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
 		}
 	});
 </script>
