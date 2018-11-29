@@ -1,10 +1,11 @@
 package org.microservice.employee.model;
 
-public class Address {
+public class AddressObj {
 	
 	private int number;
 	private String name;
 	private int port;
+	private Integer employeeId;
 
 	public int getNumber() {
 		return number;
@@ -30,12 +31,20 @@ public class Address {
 		this.port = port;
 	}
 
-	public Address(int number, String name, int port) {
+	public Integer getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
+	}
+
+	public AddressObj(int number, String name, int port) {
 		super();
 		this.number = number;
 		this.name = name;
 		this.port = port;
 	}
 
-	public Address() {}
+	public AddressObj() {}
 }

@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Spring Microservices Demo</title>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!-- Include Bootstrap -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+</head>
+<body>
+
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Spring + Vuejs Microservices Demo</a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#about">About</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container" id="employee-info">
+		<div class="starter-template">
+			<h1>Spring + Vuejs Microservices Demo</h1>
+			<h2>
+				<span th:text="'Message: ' + ${message}"></span>
+			</h2>
+		</div>
+		<hr>
+		<form id="employee-form" enctype='application/json'>
+			<h4>Information</h4>
+			<input type="hidden" name="id" v-model="employeeObj.id">
+			<div class="form-group row">
+				<label for="name" class="col-sm-1 col-form-label">Name</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control-plaintext" name="name"
+						id="name" placeholder="Name" v-model="employeeObj.name">
+				</div>
+				<label for="age" class="col-sm-1 col-form-label">Age</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control-plaintext" id="age" name="age"
+						placeholder="Age" v-model="employeeObj.age">
+				</div>
+			</div>
+			<h5>Address</h5>
+			<div class="form-group row">
+				<label for="number" class="col-sm-1 col-form-label">Number</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control-plaintext" name="addressObj.number"
+						id="number" placeholder="Number" v-model="employeeObj.addressObj.number">
+				</div>
+				<label for="name" class="col-sm-1 col-form-label">Name</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control-plaintext" id="name" name="addressObj.name"
+						placeholder="name" v-model="employeeObj.addressObj.name">
+				</div>
+			</div>
+			<a type="button" class="btn btn-primary" @click="addEmployee" >Add</a>
+		</form>
+		<!-- /.container -->
+		<h2>Employee list</h2>
+		<div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Delete</th>
+						<th>Name</th>
+						<th>Age</th>
+						<th>Address</th>
+						<th>Port</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr is="employee-card" v-for="employee in employees" 
+						:employee="employee" :key="employee.id" getEmployee="getEmployee">
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/x-template" id="template">
+<tr>
+	<td>
+		<button type="button" class="btn btn-danger" @click="deleteEmployee(employee.id)">-</button>
+		<input type="hidden" :value="employee.id" />
+	</td>
+	<td>{{ employee.name }}</td>
+	<td>{{ employee.age }}</td>
+	<td>{{ employee.addressObj.number }}-{{ employee.addressObj.name }}</td>
+	<td>{{ employee.addressObj.port }}</td>
+</tr>
+</script>
+<script th:src="@{js/web-vue.js}"></script>
+</body>
+</html>

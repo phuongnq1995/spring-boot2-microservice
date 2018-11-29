@@ -5,7 +5,7 @@ spring:
     name: gateway-server
 
 zuul:
-  prefix: /api
+  ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
   routes:
     employee:
       path: /employee/**
@@ -13,12 +13,9 @@ zuul:
     address:
       path: /address/**
       serviceId: address-service
-    web:
-      path: /web/**
-      serviceId: web-mvc
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://192.168.100.96:8761/eureka/
     registerWithEureka: false

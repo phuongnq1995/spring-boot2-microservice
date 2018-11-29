@@ -1,43 +1,39 @@
 package org.microservice.address.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
-import org.microservice.address.model.Address;
+import org.microservice.address.model.AddressObj;
+import org.microservice.address.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AddressController {
 
 	@Autowired
-	private Environment environment;
-
-	private List<Address> address;
+	AddressService addressService; 
 
 	protected Logger logger = Logger.getLogger(AddressController.class.getName());
 
-	public AddressController() {
-		address = new ArrayList<>();
-		address.add(new Address(1, "11111"));
-		address.add(new Address(2, "22222"));
-		address.add(new Address(3, "33333"));
-		address.add(new Address(4, "44444"));
-		address.add(new Address(5, "55555"));
-		address.add(new Address(6, "66666"));
+	@GetMapping("/address/{employeeId}")
+	public AddressObj findByNumber(@PathVariable("employeeId") int employeeId) {
+		return addressService.findByEmployeeId(employeeId);
 	}
 
-	@CrossOrigin
-	@GetMapping("address/{number}")
-	public Address findByNumber(@PathVariable("number") int number) {
-		logger.info(String.format("Account.findByNumber(%s)", number));
-		Address address = this.address.stream().filter(it -> it.getNumber() == (number)).findFirst().get();
-		address.setPort(Integer.parseInt(environment.getProperty("local.server.port")));
-		return address;
+	@PostMapping("/address")
+	public AddressObj save(@RequestBody AddressObj addressObj) {;
+		addressObj = addressService.saveAddress(addressObj);
+
+		return addressObj;
+	}
+
+	@DeleteMapping("/address/{employeeId}")
+	public void delete(@PathVariable("employeeId") int employeeId) {
+		addressService.deleteAddress(employeeId);
 	}
 }

@@ -13,10 +13,17 @@ public class HomeController {
 	@Value("${welcome.message:test}")
 	private String message = "Hello World";
 
-	@RequestMapping
+	@RequestMapping("vue")
 	public String index(Map<String, Object> model){
 		System.out.println("haizz");
 		model.put("message", this.message);
-		return "index";
+		return "vue/index";
+	}
+
+	@RequestMapping("react")
+	public String react(Map<String, Object> model){
+		System.out.println("haizz");
+		model.put("message", this.message);
+		return "react/index";
 	}
 }
